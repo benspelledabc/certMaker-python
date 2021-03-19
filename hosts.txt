@@ -1,0 +1,5 @@
+uc-1-2-3-4.earth.country.state.city.me
+uc-2-2-3-4.earth.country.state.city.me jenkins.benspelledabc.me
+
+uc-3-2-3-4.earth.country.state.city.me web.benspelledabc.me www.benspelledabc.me
+uc-4-2-3-4.earth.country.state.city.me
