@@ -10,13 +10,16 @@ def move_keys_and_csrs(destination_dir):
 
 
 def process_no_sans_needed(line):
-    output_line = 'openssl req -new -newkey rsa:2048 -nodes -keyout {0}.key -subj "/C=US/ST=MD/O=Ben Spelled ABC/OU=Sample, OU=SubOU, OU=Level3Sub/CN={0}" -out {0}.csr'.format(line)
+    output_line = 'openssl req -new -newkey rsa:2048 -nodes -keyout {0}.key -subj "/C=US/ST=MD/O=Ben Spelled ' \
+                  'ABC/OU=Sample, OU=SubOU, OU=Level3Sub/CN={0}" -out {0}.csr'.format(line)
     with open("output.sh", "a+") as fp:
         fp.writelines(output_line + "\n")
 
 
 def process_sans_needed(line_items):
-    starting_string = r'openssl req -new -newkey rsa:2048 -nodes -keyout {0}.key -subj "/C=US/ST=CA/O=Acme, Inc./OU=Sample, OU=SubOU, OU=Level3Sub/CN={0}" -reqexts SAN -config <(cat sans.cnf <(printf "\n[SAN]\nsubjectAltName='.format(line_items[0])
+    starting_string = r'openssl req -new -newkey rsa:2048 -nodes -keyout {0}.key -subj "/C=US/ST=CA/O=Acme, ' \
+                      r'Inc./OU=Sample, OU=SubOU, OU=Level3Sub/CN={0}" -reqexts SAN -config <(cat sans.cnf <(printf ' \
+                      r'"\n[SAN]\nsubjectAltName='.format(line_items[0])
     dns_strings = ''
 
     for x in range(1, len(line_items)):
