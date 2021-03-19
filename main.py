@@ -2,9 +2,10 @@ import os
 
 
 def move_keys_and_csrs(destination_dir):
-    if not os.path.isdir(destination_dir):
-        os.makedirs(destination_dir)
+    # if not os.path.isdir(destination_dir):
+    #     os.makedirs(destination_dir)
     with open("output.sh", "a+") as fp:
+        fp.writelines("mkdir {0}\n".format(destination_dir))
         fp.writelines("mv *.csr {0}{1}\n".format(destination_dir, os.path.sep))
         fp.writelines("mv *.key {0}{1}\n".format(destination_dir, os.path.sep))
 
