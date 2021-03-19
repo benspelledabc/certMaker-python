@@ -1,20 +1,13 @@
-import fnmatch
 import os
-import shutil
-
-#
-# def move_file(source_path, destination_dir):
-#     if not os.path.isdir(destination_dir):
-#         os.makedirs(destination_dir)
-#     shutil.move(source_path, destination_dir)
-#
-#
-# def move_keys_and_csrs(source_dir):
-#     files = fnmatch.filter(os.listdir(source_dir), "*.csr")
-#     print(files)
 
 
-# We might not actually give a heck about the files creaed unless we actually run output.sh
+def move_keys_and_csrs(destination_dir):
+    if not os.path.isdir(destination_dir):
+        os.makedirs(destination_dir)
+    with open("output.sh", "a+") as fp:
+        fp.writelines("mv *.csr {0}{1}\n".format(destination_dir, os.path.sep))
+        fp.writelines("mv *.key {0}{1}\n".format(destination_dir, os.path.sep))
+
 
 def process_no_sans_needed(line):
     output_line = 'openssl req -new -newkey rsa:2048 -nodes -keyout {0}.key -subj "/C=US/ST=MD/O=Ben Spelled ABC/OU=Sample, OU=SubOU, OU=Level3Sub/CN={0}" -out {0}.csr'.format(line)
@@ -62,6 +55,11 @@ def get_content(input_file):
     return output
 
 
+# Cleanup before first run
+if os.path.isfile("output.sh"):
+    os.remove("output.sh")
+
+# doWork()
 content = get_content('hosts.txt')
 process_unfiltered_list(content)
-# move_keys_and_csrs("output")
+move_keys_and_csrs("output")
